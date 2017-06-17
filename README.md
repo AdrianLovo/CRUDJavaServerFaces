@@ -13,4 +13,4 @@ Glassfish 4.1
 
 *Librerias y querys de BD incluidos dentro del proyecto
 
-<img src="https://www.dropbox.com/s/yo78pgme2tf09o5/C1.PNG?dl=0"/>
+(https://www.dropbox.com/s/yo78pgme2tf09o5/C1.PNG?dl=0 "Pantalla Principal")
