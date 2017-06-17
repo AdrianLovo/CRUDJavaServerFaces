@@ -1,0 +1,162 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./Plantilla/Template.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="top">
+        top
+    </ui:define>
+
+    <ui:define name="left">
+        left
+    </ui:define>
+
+    <ui:define name="content">
+
+        <h:form id="formAllPersona">
+            <p:growl id="growl" showDetail="false" sticky="false">
+                <p:dataTable id="tblPersona" value="#{personaController.personaTodos()}" var="persona" rows="10" paginator="true"
+                             paginatorTemplate="{PreviousPageLink} {PageLinks} {NextPageLink} {RowsPerPageDropdown}"
+                             rowsPerPageTemplate="10,20,30" paginatorPosition="bottom">
+
+                    <f:facet name="header">
+                        Lista de Personas
+                    </f:facet>
+
+
+                    <p:column headerText="Id">
+                        <p:outputLabel value="#{persona.idPersona}"/>
+                    </p:column>  
+                    <p:column headerText="Nombre">
+                        <p:outputLabel value="#{persona.nombre}"/>
+                    </p:column>  
+                    <p:column headerText="Apellido">
+                        <p:outputLabel value="#{persona.apellido}"/>
+                    </p:column>  
+                    <p:column headerText="Edad">
+                        <p:outputLabel value="#{persona.edad}"/>
+                    </p:column>  
+                    <p:column headerText="Genero">
+                        <p:outputLabel value="#{persona.genero}"/>
+                    </p:column>  
+                    <p:column headerText="Fecha de Nacimiento">
+                        <p:outputLabel value="#{persona.fechaNac}">
+                            <f:convertDateTime pattern="dd/MM/YYYY"/>
+                        </p:outputLabel>
+                    </p:column>  
+
+
+                    <center>                       
+                        <!--Botones para modificar y eliminar-->
+                        <p:column headerText="Opciones" style="width: 100px">
+                            <center>
+                                <p:commandButton icon="ui-icon-pencil" title="Modificar Persona" actionListener="#{personaController.personaRegistro(persona)}" update="@(form)"/>
+                                <p:commandButton icon="ui-icon-trash" title="Eliminar Persona" actionListener="#{personaController.personaEliminar(persona)}" update="@(form)"/>
+                            </center>
+                        </p:column>
+                    </center>
+
+                </p:dataTable>
+            </p:growl>            
+        </h:form>
+
+        <p:separator/>
+
+        <!--BOTON Agregar-->
+        <h:form id="nuevoPersona">
+            <center>
+                <p:commandButton value="Nueva Persona" icon="ui-icon-document" onclick="PF('dlgGuardarPersona').show();" update=":formGuardar:panelGuardar"/>
+            </center>
+        </h:form>
+
+        <!-- DIALOGO Agregar-->
+        <p:dialog id="dlgGuardarPersona" widgetVar="dlgGuardarPersona" minWidth="750" modal="true" header="Guardar Registro" draggable="false" resizable="false" position="top" style="margin-top:30">
+            <h:form id="formGuardar">
+                <p:outputLabel id="panelGuardar" >
+                    <p:panelGrid>
+                        <p:row>
+                            <p:column><p:outputLabel value="Nombre:"/></p:column>
+                            <p:column><p:inputText value="#{personaController.personaNuevo.nombre}" required="true"/></p:column>                        
+                        </p:row>
+                        <p:row>
+                            <p:column><p:outputLabel value="Apellido:"/></p:column>
+                            <p:column><p:inputText value="#{personaController.personaNuevo.apellido}" required="true"/></p:column>                        
+                        </p:row>
+                        <p:row>
+                            <p:column><p:outputLabel value="Edad:"/></p:column>
+                            <p:column>
+                                <p:inputText value="#{personaController.personaNuevo.edad}" required="true">
+                                    <p:keyFilter regEx="/[\d\-\.]/"/> 
+                                </p:inputText>
+                            </p:column>                        
+                        </p:row>
+                        <p:row>
+                            <p:column><p:outputLabel value="Genero:"/></p:column>
+                            <p:column>
+                                <p:inputText value="#{personaController.personaNuevo.genero}" required="true">
+                                    <p:keyFilter regEx="/[MF]/i"/>
+                                </p:inputText>                              
+                            </p:column>                        
+                        </p:row>
+
+                        <p:row>
+                            <p:column><p:outputLabel value="FechaNac:"/></p:column>
+                            <p:column>
+                                <p:inputMask value="#{personaController.personaNuevo.fechaNac}"  mask="99/99/9999" required="true">
+                                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                                </p:inputMask>
+                            </p:column>
+                        </p:row>
+
+                        <p:row>
+                            <p:column colspan="2"><center><p:commandButton value="Agregar Persona" icon="ui-icon-disk" actionListener="#{personaController.personaGuardar()}" /></center></p:column>
+                        </p:row>
+
+                    </p:panelGrid>
+                </p:outputLabel>
+
+            </h:form> 
+        </p:dialog>
+
+
+        <!-- DIALOGO Modificar-->        
+        <p:dialog id="dlgModificarPersona" widgetVar="dlgModificarPersona" header="Modificar Registro" minWidth="750" modal="true" position="top" style="margin-top:30px">
+            <h:form id="formModificar">
+                <p:outputPanel id="panelModificar" >
+                    <p:panelGrid  columns="2" >
+                        <p:outputLabel value="Nombre:"/>
+                        <p:inputText value="#{personaController.personaUpdate.nombre}" required="true"/>
+                        <p:outputLabel value="Apellido:"/>
+                        <p:inputText value="#{personaController.personaUpdate.apellido}" required="true"/>
+                        <p:outputLabel value="Edad:"/>
+                        <p:inputText value="#{personaController.personaUpdate.edad}" required="true">
+                            <p:keyFilter regEx="/[\d\-\.]/"/> 
+                        </p:inputText>
+
+                        <p:outputLabel value="Genero:"/>
+                        <p:inputText id="text1" value="#{personaController.personaUpdate.edad}" required="true">
+                            <p:keyFilter regEx="/[MF]/i"/>
+                        </p:inputText> 
+
+                        <p:outputLabel value="Fecha de Nacimiento:"/>
+                        <p:inputMask value="#{personaController.personaUpdate.fechaNac}"  mask="99/99/9999" required="true">
+                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                        </p:inputMask>
+
+
+
+                        <p:commandButton value="Modificar" icon="ui-icon-extlink" actionListener="#{personaController.personaModificar()}" update="@(form)"/>
+                    </p:panelGrid>
+                </p:outputPanel>
+            </h:form>
+        </p:dialog>
+
+
+
+    </ui:define>
+
+</ui:composition>
