@@ -13,4 +13,4 @@ Glassfish 4.1
 
 *Librerias y querys de BD incluidos dentro del proyecto
 
-(https://www.dropbox.com/s/yo78pgme2tf09o5/C1.PNG?dl=0)
+(https://raw.githubusercontent.com/AdrianLovo/CRUDJavaServerFaces/master/C1.PNG)
