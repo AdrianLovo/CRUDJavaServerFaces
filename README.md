@@ -1,14 +1,14 @@
 # CRUDJavaServerFaces
 
-CRUD utilizando: 
--Java Persistence Api
--Entreprise Java Beans
--Java Server Faces (Primefaces).
+CRUD utilizando: <br>
+-Java Persistence Api<br>
+-Entreprise Java Beans<br>
+-Java Server Faces (Primefaces).<br>
 
-Base de Datos 
+Base de Datos<br>
 -Mysql.
 
-Glassfish 4.1
+Glassfish 4.1<br>
 -DataSource Nombre: jdbcs/dsLibros
 
 *Librerias y querys de BD incluidos dentro del proyecto
